@@ -1,0 +1,6 @@
+# makepkg output
+src/
+pkg/
+goodix-27c6-5125/
+*.pkg.tar.*
+*.log

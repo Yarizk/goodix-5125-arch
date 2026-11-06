@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# The driver persists its Linux host-pairing state in a root-owned directory and refuses to use it
+# unless the owner is root:root and the mode is exactly 0700 (fail-closed policy check).
+
+_state=/var/lib/fprint/goodix-5125-state-v2
+
+post_install() {
+  install -d -m 0700 -o root -g root /var/lib/fprint
+  if [ ! -d "$_state" ]; then
+    install -d -m 0700 -o root -g root "$_state"
+  fi
+  echo ":: Goodix 27c6:5125 driver installed."
+  echo "   Restart fprintd, then enroll:  sudo systemctl restart fprintd && fprintd-enroll"
+  echo "   Troubleshooting: goodix-5125-diagnose (read-only), see the port's README."
+}
+
+post_upgrade() {
+  post_install
+}
+
+post_remove() {
+  echo ":: $_state was kept on purpose: it holds the Linux pairing state that lets"
+  echo "   Linux and Windows share the reader. Remove it only if you know you no longer need it."
+  echo "   To go back to Arch's stock library: sudo pacman -S libfprint"
+}
