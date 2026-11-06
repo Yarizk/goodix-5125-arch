@@ -52,12 +52,12 @@ build() {
 }
 
 check() {
-  # Upstream's offline, hardware-free regression suites (normal + ASan/UBSan builds).
-  local t name
+  # Upstream's nine offline, hardware-free regression suites (normal + ASan/UBSan builds).
+  # Run exactly as upstream documents them: no arguments (several runners reject any).
+  local t
   for t in "$srcdir"/goodix-27c6-5125/libfprint-driver/tests/run_goodix_*_test.sh; do
-    name=$(basename "$t" .sh)
-    echo "==> $name"
-    GOODIX_P6_IN_SDK=1 sh "$t" "$srcdir/checks/$name"
+    echo "==> $(basename "$t" .sh)"
+    sh "$t"
   done
 }
 
