@@ -1,5 +1,5 @@
 pkgbase = libfprint-goodix-5125
-	pkgdesc = libfprint with the Goodix USB 27c6:5125 driver (Huawei MateBook / Honor MagicBook, firmware APP12508/APP12509)
+	pkgdesc = libfprint with the Goodix USB 27c6:5125 driver (Huawei MateBook D15 / Honor MagicBook, firmware APP12508/APP12509)
 	pkgver = 1.94.100.r4bc1f30
 	pkgrel = 1
 	url = https://github.com/sorguido/goodix-27c6-5125

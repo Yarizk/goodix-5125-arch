@@ -13,7 +13,33 @@ Report Arch problems **here**, not upstream. All driver code is upstream's, buil
 at a pinned commit; this repository only adds packaging, a read-only diagnostic tool and
 documentation.
 
-## Supported hardware
+## Where it works
+
+**Tested by this port** (live hardware):
+
+| Item | Value |
+| --- | --- |
+| Laptop | **Huawei MateBook D15** — series *MateBook D* (DMI `product_family`), model code **`BoDE-WXX9`** (DMI `product_name`; the community identifies BoDE-WXX9 as the D15 in [goodix-fp-dump#58](https://github.com/goodix-fp-linux-dev/goodix-fp-dump/issues/58)) |
+| Board / BIOS | `BoDE-WXX9-PCB-B4`, version `M1010`; BIOS 1.20 (2023-07-05) |
+| CPU | 11th Gen Intel Core i5-1155G7 |
+| Fingerprint reader | Goodix USB `27c6:5125` in the power button, firmware `GF_ST411SEC_APP_12509` |
+
+To check your own laptop: `cat /sys/class/dmi/id/product_family /sys/class/dmi/id/product_name`
+and `lsusb | grep 27c6:5125`.
+
+**Reported by others with the same reader** (not tested by this port; the firmware must still be
+APP12508 or APP12509 — check with `goodix-5125-diagnose`):
+
+| Laptop | Source |
+| --- | --- |
+| Huawei MateBook D15 (D15-family), APP12509 | upstream author's test machine ([upstream README](https://github.com/sorguido/goodix-27c6-5125)) |
+| Honor MagicBook 15 (`BMH-WDX9`), APP12508 | [goodix-fp-dump#63](https://github.com/goodix-fp-linux-dev/goodix-fp-dump/issues/63) |
+| Honor MagicBook 16 | [goodix-fp-dump#60](https://github.com/goodix-fp-linux-dev/goodix-fp-dump/issues/60) |
+
+Huawei and Honor sold several MateBook D / MagicBook generations; the USB ID and firmware decide
+compatibility, not the marketing name.
+
+## Supported reader
 
 | Item | Value |
 | --- | --- |
@@ -31,7 +57,7 @@ qualification.
 
 | Item | Value |
 | --- | --- |
-| Laptop | Huawei MateBook, product `BoDE-WXX9`, dual boot with Windows |
+| Laptop | Huawei MateBook D15 (`BoDE-WXX9`, i5-1155G7), dual boot with Windows |
 | Reader | `27c6:5125`, firmware `GF_ST411SEC_APP_12509` |
 | OS | Arch Linux, kernel 7.2.14-arch1-1, Hyprland 0.57.1 (Wayland) |
 | Stack | `fprintd` 1.94.5, OpenSSL 3.6.5, glib2 2.90.1 |
@@ -74,7 +100,7 @@ All four lines should say `OK`. If not, read [Troubleshooting](#troubleshooting)
 ## Install
 
 ```sh
-git clone <this repository> && cd goodix-5125-arch
+git clone https://github.com/GITHUB_USER/goodix-5125-arch.git && cd goodix-5125-arch
 makepkg -si          # answer "y" when asked to replace libfprint
 sudo systemctl restart fprintd
 ```
