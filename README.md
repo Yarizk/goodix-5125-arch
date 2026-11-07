@@ -43,6 +43,7 @@ qualification.
 | libfprint `verify` example | `MATCH!` (~6 s); pairing reused (`pairing_writes=0`) |
 | `fprintd-enroll -f right-index-finger` | `enroll-completed` (3 `enroll-retry-scan` along the way, normal) |
 | `fprintd-verify` | `verify-match` |
+| Package built from this PKGBUILD (upstream unmodified) | all 9 upstream offline suites pass in `check()` (21 checks, incl. ASan/UBSan); `fprintd-verify` → `verify-match` with the existing enrollment (no re-enrollment needed) |
 | Windows Hello on the same reader afterwards | not re-tested yet (upstream reports coexistence works) |
 | PAM integration (`sudo`, lock screen, login) | not covered by this port yet |
 
@@ -129,6 +130,14 @@ sudo install -d -m 0700 -o root -g root /var/lib/fprint/goodix-5125-state-v2
 
 Expected: the driver deliberately refuses raw image capture (for example libfprint's
 `img-capture` example). Use enroll / verify.
+
+### `verify-no-match` with the right finger
+
+Wait until `Verifying: …` is printed and about two more seconds before touching, then hold the
+finger flat and still. Each session starts by measuring the sensor with **no** finger on it; a
+finger already on the reader spoils that baseline. On the test machine, touching immediately
+gave three `NO_MATCH` results in a row (and once `unexpected post-TLS A0 frame … phase=FDT_82`);
+waiting two seconds matched straight away. Upstream gives the same advice.
 
 ### Enrollment "hangs" with no output
 
