@@ -100,7 +100,7 @@ All four lines should say `OK`. If not, read [Troubleshooting](#troubleshooting)
 ## Install
 
 ```sh
-git clone https://github.com/GITHUB_USER/goodix-5125-arch.git && cd goodix-5125-arch
+git clone https://github.com/Yarizk/goodix-5125-arch.git && cd goodix-5125-arch
 makepkg -si          # answer "y" when asked to replace libfprint
 sudo systemctl restart fprintd
 ```
